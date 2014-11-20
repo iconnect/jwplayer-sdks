@@ -14,20 +14,37 @@ package {
 		[Embed(source="pan_left.png")]
 		private const PanLeftIcon:Class;
 
+		[Embed(source="pan_left_selected.png")]
+		private const PanLeftSelectedIcon:Class;
+
 		[Embed(source="pan_right.png")]
 		private const PanRightIcon:Class;
+
+		[Embed(source="pan_right_selected.png")]
+		private const PanRightSelectedIcon:Class;
 
 		[Embed(source="pan_stereo.png")]
 		private const PanStereoIcon:Class;
 
+		[Embed(source="pan_stereo_selected.png")]
+		private const PanStereoSelectedIcon:Class;
+
 		private var api:IPlayer;
 		private var field:TextField;
 		private var infoBox:TextField;
-		private var panLeftButton:Sprite;
-		private var panStereoButton:Sprite;
-		private var panRightButton:Sprite;
+		private var panLeftBtn:Sprite;
+		private var panStereoBtn:Sprite;
+		private var panRightBtn:Sprite;
 		private var playerWidth:Number;
 		private var playerHeight:Number;
+
+                /* Icons */
+                private var panLeftIcon:DisplayObject;
+                private var panLeftSelectedIcon:DisplayObject;
+                private var panStereoIcon:DisplayObject;
+                private var panStereoSelectedIcon:DisplayObject;
+                private var panRightIcon:DisplayObject;
+                private var panRightSelectedIcon:DisplayObject;
 
 
 		/** Let the player know what the name of your plugin is. **/
@@ -42,32 +59,39 @@ package {
 
 		/** Constructor **/
 		public function AudioPanning() {
-			panLeftButton = new Sprite();
-			panLeftButton.addChild(new PanLeftIcon());
-			panLeftButton.y = 10;
-			panLeftButton.x = 10;
-			panLeftButton.buttonMode = true;
-			panLeftButton.height = 20;
-			panLeftButton.width = 20;
-			addChild(panLeftButton);
 
-			panStereoButton = new Sprite();
-			panStereoButton.addChild(new PanStereoIcon());
-			panStereoButton.x = 30;
-			panStereoButton.y = 10;
-			panStereoButton.buttonMode = true;
-			panStereoButton.height = 20;
-			panStereoButton.width = 20;
-			addChild(panStereoButton);
+                        panLeftIcon = new PanLeftIcon();
+                        panLeftSelectedIcon = new PanLeftSelectedIcon();
+			panLeftBtn = new Sprite();
+			panLeftBtn.addChild(panLeftIcon);
+			panLeftBtn.y = 10;
+			panLeftBtn.x = 10;
+			panLeftBtn.buttonMode = true;
+			panLeftBtn.height = 25;
+			panLeftBtn.width = 25;
+			addChild(panLeftBtn);
 
-			panRightButton = new Sprite();
-			panRightButton.addChild(new PanRightIcon());
-			panRightButton.x = 50;
-			panRightButton.y = 10;
-			panRightButton.buttonMode = true;
-			panRightButton.height = 20;
-			panRightButton.width = 20;
-			addChild(panRightButton);
+                        panStereoIcon = new PanStereoIcon();
+                        panStereoSelectedIcon = new PanStereoSelectedIcon();
+			panStereoBtn = new Sprite();
+			panStereoBtn.addChild(panStereoIcon);
+			panStereoBtn.x = 35;
+			panStereoBtn.y = 10;
+			panStereoBtn.buttonMode = true;
+			panStereoBtn.height = 25;
+			panStereoBtn.width = 25;
+			addChild(panStereoBtn);
+
+                        panRightIcon = new PanRightIcon();
+                        panRightSelectedIcon = new PanRightSelectedIcon();
+			panRightBtn = new Sprite();
+			panRightBtn.addChild(panRightIcon);
+			panRightBtn.x = 60;
+			panRightBtn.y = 10;
+			panRightBtn.buttonMode = true;
+			panRightBtn.height = 25;
+			panRightBtn.width = 25;
+			addChild(panRightBtn);
 
 			infoBox = new TextField();
 			infoBox.background = false;
@@ -81,9 +105,9 @@ package {
 
 
                 private function setPanningVisible(status:Boolean):void {
-			panLeftButton.visible = status;
-			panStereoButton.visible = status;
-			panRightButton.visible = status;
+			panLeftBtn.visible = status;
+			panStereoBtn.visible = status;
+			panRightBtn.visible = status;
                 }
 
 
@@ -92,12 +116,12 @@ package {
 			api = player;
                         api.controls.display.addEventListener(MouseEvent.MOUSE_OUT, hidePanButtons);
                         api.controls.display.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
-			panLeftButton.addEventListener(MouseEvent.CLICK, panLeftClicked);
-			panLeftButton.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
-			panStereoButton.addEventListener(MouseEvent.CLICK, panStereoClicked);
-			panStereoButton.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
-			panRightButton.addEventListener(MouseEvent.CLICK, panRightClicked);
-			panRightButton.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
+			panLeftBtn.addEventListener(MouseEvent.CLICK, panLeftClicked);
+			panLeftBtn.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
+			panStereoBtn.addEventListener(MouseEvent.CLICK, panStereoClicked);
+			panStereoBtn.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
+			panRightBtn.addEventListener(MouseEvent.CLICK, panRightClicked);
+			panRightBtn.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
                         // Add pan handlers to show enabled/disabled
 		};
 
@@ -109,16 +133,55 @@ package {
 		};
 
 
+                private function clickLeftIcon():void {
+			panLeftBtn.removeChildAt(0);
+			panLeftBtn.addChild(panLeftSelectedIcon);
+                }
+
+                private function unClickLeftIcon():void {
+			panLeftBtn.removeChildAt(0);
+			panLeftBtn.addChild(panLeftIcon);
+                }
+
+                private function clickStereoIcon():void {
+			panStereoBtn.removeChildAt(0);
+			panStereoBtn.addChild(panStereoSelectedIcon);
+                }
+
+                private function unClickStereoIcon():void {
+			panStereoBtn.removeChildAt(0);
+			panStereoBtn.addChild(panStereoIcon);
+                }
+
+                private function clickRightIcon():void {
+			panRightBtn.removeChildAt(0);
+			panRightBtn.addChild(panRightSelectedIcon);
+                }
+
+                private function unClickRightIcon():void {
+			panRightBtn.removeChildAt(0);
+			panRightBtn.addChild(panRightIcon);
+                }
+
 		private function panLeftClicked(event:MouseEvent):void {
 		        api.pan(-100);
+                        clickLeftIcon();
+                        unClickRightIcon();
+                        unClickStereoIcon();
 		};
 
 		private function panRightClicked(event:MouseEvent):void {
 			api.pan(100);
+                        clickRightIcon();
+                        unClickLeftIcon();
+                        unClickStereoIcon();
 		};
 
 		private function panStereoClicked(event:MouseEvent):void {
 			api.pan(0);
+                        clickStereoIcon();
+                        unClickRightIcon();
+                        unClickLeftIcon();
 		};
 
 		private function hidePanButtons(event:MouseEvent):void {
