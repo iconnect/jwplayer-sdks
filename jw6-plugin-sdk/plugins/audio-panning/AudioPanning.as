@@ -26,6 +26,8 @@ package {
 		private var panLeftButton:Sprite;
 		private var panStereoButton:Sprite;
 		private var panRightButton:Sprite;
+		private var playerWidth:Number;
+		private var playerHeight:Number;
 
 
 		/** Let the player know what the name of your plugin is. **/
@@ -81,6 +83,8 @@ package {
 		/** Called by the player after the plugin has been created. **/
 		public function initPlugin(player:IPlayer, config:PluginConfig):void {
 			api = player;
+                        api.controls.display.addEventListener(MouseEvent.MOUSE_OUT, hidePanButtons);
+                        api.controls.display.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
 			panLeftButton.addEventListener(MouseEvent.CLICK, panLeftClicked);
 			panStereoButton.addEventListener(MouseEvent.CLICK, panStereoClicked);
 			panRightButton.addEventListener(MouseEvent.CLICK, panRightClicked);
@@ -90,6 +94,8 @@ package {
 
 		/** If the player resizes itself, this gets called (including on setup). **/
 		public function resize(wid:Number, hei:Number):void {
+                  this.playerWidth = wid;
+                  this.playerHeight = hei;
 		};
 
 
@@ -106,6 +112,16 @@ package {
 		private function panStereoClicked(event:MouseEvent):void {
 			api.pan(0);
 		        infoBox.text = "Pan Stereo";
+		};
+
+		private function hidePanButtons(event:MouseEvent):void {
+			api.pan(0);
+		        infoBox.text = "hide";
+		};
+
+		private function showPanButtons(event:MouseEvent):void {
+			api.pan(0);
+		        infoBox.text = "show";
 		};
 
 
