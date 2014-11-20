@@ -80,15 +80,25 @@ package {
 		};
 
 
+                private function setPanningVisible(status:Boolean):void {
+			panLeftButton.visible = status;
+			panStereoButton.visible = status;
+			panRightButton.visible = status;
+                }
+
+
 		/** Called by the player after the plugin has been created. **/
 		public function initPlugin(player:IPlayer, config:PluginConfig):void {
 			api = player;
                         api.controls.display.addEventListener(MouseEvent.MOUSE_OUT, hidePanButtons);
                         api.controls.display.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
 			panLeftButton.addEventListener(MouseEvent.CLICK, panLeftClicked);
+			panLeftButton.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
 			panStereoButton.addEventListener(MouseEvent.CLICK, panStereoClicked);
+			panStereoButton.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
 			panRightButton.addEventListener(MouseEvent.CLICK, panRightClicked);
-                        // Add pan handlers to show different colours.
+			panRightButton.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
+                        // Add pan handlers to show enabled/disabled
 		};
 
 
@@ -101,27 +111,22 @@ package {
 
 		private function panLeftClicked(event:MouseEvent):void {
 		        api.pan(-100);
-		        infoBox.text = "Pan Left";
 		};
 
 		private function panRightClicked(event:MouseEvent):void {
 			api.pan(100);
-		        infoBox.text = "Pan Right";
 		};
 
 		private function panStereoClicked(event:MouseEvent):void {
 			api.pan(0);
-		        infoBox.text = "Pan Stereo";
 		};
 
 		private function hidePanButtons(event:MouseEvent):void {
-			api.pan(0);
-		        infoBox.text = "hide";
+		        setPanningVisible(false);
 		};
 
 		private function showPanButtons(event:MouseEvent):void {
-			api.pan(0);
-		        infoBox.text = "show";
+		        setPanningVisible(true);
 		};
 
 
