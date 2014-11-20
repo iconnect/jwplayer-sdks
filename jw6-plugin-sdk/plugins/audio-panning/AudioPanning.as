@@ -24,6 +24,8 @@ package {
 		private var field:TextField;
 		private var infoBox:TextField;
 		private var panLeftButton:Sprite;
+		private var panStereoButton:Sprite;
+		private var panRightButton:Sprite;
 
 
 		/** Let the player know what the name of your plugin is. **/
@@ -41,14 +43,34 @@ package {
 			panLeftButton = new Sprite();
 			panLeftButton.addChild(new PanLeftIcon());
 			panLeftButton.y = 10;
+			panLeftButton.x = 10;
 			panLeftButton.buttonMode = true;
+			panLeftButton.height = 20;
+			panLeftButton.width = 20;
 			addChild(panLeftButton);
 
+			panStereoButton = new Sprite();
+			panStereoButton.addChild(new PanStereoIcon());
+			panStereoButton.x = 30;
+			panStereoButton.y = 10;
+			panStereoButton.buttonMode = true;
+			panStereoButton.height = 20;
+			panStereoButton.width = 20;
+			addChild(panStereoButton);
+
+			panRightButton = new Sprite();
+			panRightButton.addChild(new PanRightIcon());
+			panRightButton.x = 50;
+			panRightButton.y = 10;
+			panRightButton.buttonMode = true;
+			panRightButton.height = 20;
+			panRightButton.width = 20;
+			addChild(panRightButton);
+
 			infoBox = new TextField();
-			infoBox.background = true;
-			infoBox.textColor = 0xffffff;
-			infoBox.backgroundColor = 0x000000;
-			infoBox.x = 10;
+			infoBox.background = false;
+			infoBox.textColor = 0x0000ff;
+			infoBox.x = 300;
 			infoBox.y = 10;
 			infoBox.height = 20;
 			infoBox.width = 300;
@@ -59,34 +81,35 @@ package {
 		/** Called by the player after the plugin has been created. **/
 		public function initPlugin(player:IPlayer, config:PluginConfig):void {
 			api = player;
-			infoBox.text = (config && config.message) ? config.message : "";
 			panLeftButton.addEventListener(MouseEvent.CLICK, panLeftClicked);
+			panStereoButton.addEventListener(MouseEvent.CLICK, panStereoClicked);
+			panRightButton.addEventListener(MouseEvent.CLICK, panRightClicked);
                         // Add pan handlers to show different colours.
 		};
 
 
 		/** If the player resizes itself, this gets called (including on setup). **/
 		public function resize(wid:Number, hei:Number):void {
-			panLeftButton.x = wid - 50;
 		};
 
 
 		private function panLeftClicked(event:MouseEvent):void {
 		        api.pan(-100);
-		        infoBox.text = "Pan left";
+		        infoBox.text = "Pan Left";
 		};
 
 		private function panRightClicked(event:MouseEvent):void {
 			api.pan(100);
+		        infoBox.text = "Pan Right";
 		};
 
 		private function panStereoClicked(event:MouseEvent):void {
 			api.pan(0);
+		        infoBox.text = "Pan Stereo";
 		};
 
 
 		private function timeHandler(event:MediaEvent):void {
-			infoBox.text = Math.round(event.duration - event.position) + " seconds left";
 		};
 
 
