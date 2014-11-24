@@ -11,22 +11,22 @@ package {
 	/** An example plugin that tests various player integrations. **/
 	public class AudioPanning extends Sprite implements IPlugin6 {
 
-		[Embed(source="pan_left.png")]
+		[Embed(source="left-inactive.png")]
 		private const PanLeftIcon:Class;
 
-		[Embed(source="pan_left_selected.png")]
+		[Embed(source="left-active.png")]
 		private const PanLeftSelectedIcon:Class;
 
-		[Embed(source="pan_right.png")]
+		[Embed(source="right-inactive.png")]
 		private const PanRightIcon:Class;
 
-		[Embed(source="pan_right_selected.png")]
+		[Embed(source="right-active.png")]
 		private const PanRightSelectedIcon:Class;
 
-		[Embed(source="pan_stereo.png")]
+		[Embed(source="stereo-inactive.png")]
 		private const PanStereoIcon:Class;
 
-		[Embed(source="pan_stereo_selected.png")]
+		[Embed(source="stereo-active.png")]
 		private const PanStereoSelectedIcon:Class;
 
 		private var api:IPlayer;
@@ -122,7 +122,8 @@ package {
 			panStereoBtn.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
 			panRightBtn.addEventListener(MouseEvent.CLICK, panRightClicked);
 			panRightBtn.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
-                        // Add pan handlers to show enabled/disabled
+                        // By default, stereo must be active
+                        this.clickStereoIcon();
 		};
 
 
