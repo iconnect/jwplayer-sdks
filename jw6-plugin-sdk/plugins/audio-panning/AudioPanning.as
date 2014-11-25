@@ -116,6 +116,7 @@ package {
 			api = player;
                         api.controls.display.addEventListener(MouseEvent.MOUSE_OUT, hidePanButtons);
                         api.controls.display.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
+                        api.addEventListener(MediaEvent.JWPLAYER_MEDIA_PAN, highlightButtons);
 			panLeftBtn.addEventListener(MouseEvent.CLICK, panLeftClicked);
 			panLeftBtn.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
 			panStereoBtn.addEventListener(MouseEvent.CLICK, panStereoClicked);
@@ -193,6 +194,18 @@ package {
 		        setPanningVisible(true);
 		};
 
+		private function highlightButtons(event:MediaEvent):void {
+                        if (event.pan == -100) {
+                            this.panLeftClicked(null);
+                            return;
+                        }
+                        if (event.pan == 100) {
+                            this.panRightClicked(null);
+                            return;
+                        }
+                        
+                        this.panStereoClicked(null);
+		};
 
 		private function timeHandler(event:MediaEvent):void {
 		};
