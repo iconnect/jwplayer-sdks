@@ -62,8 +62,10 @@ package {
 
                         panLeftIcon = new PanLeftIcon();
                         panLeftSelectedIcon = new PanLeftSelectedIcon();
+                        panLeftSelectedIcon.visible = false;
 			panLeftBtn = new Sprite();
 			panLeftBtn.addChild(panLeftIcon);
+			panLeftBtn.addChild(panLeftSelectedIcon);
 			panLeftBtn.y = 10;
 			panLeftBtn.x = 10;
 			panLeftBtn.buttonMode = true;
@@ -73,8 +75,10 @@ package {
 
                         panStereoIcon = new PanStereoIcon();
                         panStereoSelectedIcon = new PanStereoSelectedIcon();
+                        panStereoSelectedIcon.visible = false;
 			panStereoBtn = new Sprite();
 			panStereoBtn.addChild(panStereoIcon);
+			panStereoBtn.addChild(panStereoSelectedIcon);
 			panStereoBtn.x = 35;
 			panStereoBtn.y = 10;
 			panStereoBtn.buttonMode = true;
@@ -84,8 +88,10 @@ package {
 
                         panRightIcon = new PanRightIcon();
                         panRightSelectedIcon = new PanRightSelectedIcon();
+                        panRightSelectedIcon.visible = false;
 			panRightBtn = new Sprite();
 			panRightBtn.addChild(panRightIcon);
+			panRightBtn.addChild(panRightSelectedIcon);
 			panRightBtn.x = 60;
 			panRightBtn.y = 10;
 			panRightBtn.buttonMode = true;
@@ -136,33 +142,33 @@ package {
 
 
                 private function clickLeftIcon():void {
-			panLeftBtn.removeChildAt(0);
-			panLeftBtn.addChild(panLeftSelectedIcon);
+			panLeftBtn.getChildAt(0).visible = false;
+			panLeftBtn.getChildAt(1).visible = true;
                 }
 
                 private function unClickLeftIcon():void {
-			panLeftBtn.removeChildAt(0);
-			panLeftBtn.addChild(panLeftIcon);
+			panLeftBtn.getChildAt(0).visible = true;
+			panLeftBtn.getChildAt(1).visible = false;
                 }
 
                 private function clickStereoIcon():void {
-			panStereoBtn.removeChildAt(0);
-			panStereoBtn.addChild(panStereoSelectedIcon);
+			panStereoBtn.getChildAt(0).visible = false;
+			panStereoBtn.getChildAt(1).visible = true;
                 }
 
                 private function unClickStereoIcon():void {
-			panStereoBtn.removeChildAt(0);
-			panStereoBtn.addChild(panStereoIcon);
+			panStereoBtn.getChildAt(0).visible = true;
+			panStereoBtn.getChildAt(1).visible = false;
                 }
 
                 private function clickRightIcon():void {
-			panRightBtn.removeChildAt(0);
-			panRightBtn.addChild(panRightSelectedIcon);
+			panRightBtn.getChildAt(0).visible = false;
+			panRightBtn.getChildAt(1).visible = true;
                 }
 
                 private function unClickRightIcon():void {
-			panRightBtn.removeChildAt(0);
-			panRightBtn.addChild(panRightIcon);
+			panRightBtn.getChildAt(0).visible = true;
+			panRightBtn.getChildAt(1).visible = false;
                 }
 
 		private function panLeftClicked(event:MouseEvent):void {
@@ -203,7 +209,6 @@ package {
                             this.panRightClicked(null);
                             return;
                         }
-                        
                         this.panStereoClicked(null);
 		};
 
