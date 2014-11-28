@@ -123,11 +123,11 @@ package {
                         api.controls.display.addEventListener(MouseEvent.MOUSE_OUT, hidePanButtons);
                         api.controls.display.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
                         api.addEventListener(MediaEvent.JWPLAYER_MEDIA_PAN, highlightButtons);
-			panLeftBtn.addEventListener(MouseEvent.CLICK, panLeftClicked);
+			panLeftBtn.addEventListener(MouseEvent.CLICK, setLeftPan);
 			panLeftBtn.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
-			panStereoBtn.addEventListener(MouseEvent.CLICK, panStereoClicked);
+			panStereoBtn.addEventListener(MouseEvent.CLICK, setStereoPan);
 			panStereoBtn.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
-			panRightBtn.addEventListener(MouseEvent.CLICK, panRightClicked);
+			panRightBtn.addEventListener(MouseEvent.CLICK, setRightPan);
 			panRightBtn.addEventListener(MouseEvent.MOUSE_OVER, showPanButtons);
                         // By default, stereo must be active
                         this.clickStereoIcon();
@@ -171,22 +171,34 @@ package {
 			panRightBtn.getChildAt(1).visible = false;
                 }
 
-		private function panLeftClicked(event:MouseEvent):void {
+                private function setLeftPan(event:MouseEvent):void {
 		        api.pan(-100);
+                        panLeftClicked();
+                }
+
+		private function panLeftClicked():void {
                         clickLeftIcon();
                         unClickRightIcon();
                         unClickStereoIcon();
 		};
 
-		private function panRightClicked(event:MouseEvent):void {
+                private function setRightPan(event:MouseEvent):void {
 			api.pan(100);
+                        panRightClicked();
+                }
+
+		private function panRightClicked():void {
                         clickRightIcon();
                         unClickLeftIcon();
                         unClickStereoIcon();
 		};
 
-		private function panStereoClicked(event:MouseEvent):void {
+		private function setStereoPan(event:MouseEvent):void {
 			api.pan(0);
+                        panStereoClicked();
+		};
+
+		private function panStereoClicked():void {
                         clickStereoIcon();
                         unClickRightIcon();
                         unClickLeftIcon();
@@ -202,14 +214,14 @@ package {
 
 		private function highlightButtons(event:MediaEvent):void {
                         if (event.pan == -100) {
-                            this.panLeftClicked(null);
+                            this.panLeftClicked();
                             return;
                         }
                         if (event.pan == 100) {
-                            this.panRightClicked(null);
+                            this.panRightClicked();
                             return;
                         }
-                        this.panStereoClicked(null);
+                        this.panStereoClicked();
 		};
 
 		private function timeHandler(event:MediaEvent):void {
